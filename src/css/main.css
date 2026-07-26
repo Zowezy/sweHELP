@@ -156,6 +156,10 @@ body {
     flex-shrink: 0;
     text-decoration: none;
 }
+.chat-action-btn#max {
+    background-color: #7f0dfd;
+    border: 1px solid #7f0dfd;
+}
 
 .chat-action-btn:hover,
 .chat-action-btn:focus-visible {
