@@ -1,9 +1,7 @@
 (function () {
     const container = document.querySelector('.page-shell');
-    const mobileRoot = document.querySelector('[data-nav-mobile]');
-    const sidebarRoot = document.querySelector('[data-nav-sidebar]');
 
-    if (!container || !mobileRoot || !sidebarRoot) return;
+    if (!container) return;
 
     function setActiveLink() {
         const currentPage = window.location.pathname.split('/').pop() || 'index.html';
@@ -57,40 +55,6 @@
         applySearch();
     }
 
-    function loadNavigation() {
-        fetch('src/templates/header-nav.html')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Navigation template could not be loaded');
-                }
-                return response.text();
-            })
-            .then(html => {
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                const mobileMarkup = doc.querySelector('.nav-mobile-shell')?.outerHTML || '';
-                const desktopMarkup = doc.querySelector('.nav-desktop-shell')?.outerHTML || '';
-
-                mobileRoot.outerHTML = mobileMarkup;
-                sidebarRoot.outerHTML = desktopMarkup;
-                setActiveLink();
-                initSearch();
-
-                document.addEventListener('click', function (event) {
-                    const link = event.target.closest('.page-shell .nav-link');
-                    if (!link) return;
-
-                    setActiveLink();
-                });
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    }
-
-    loadNavigation();
-    window.addEventListener('load', () => {
-                setActiveLink();
-                initSearch();
-    });
+    setActiveLink();
+    initSearch();
 })();
